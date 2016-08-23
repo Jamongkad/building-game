@@ -1,0 +1,31 @@
+.chat-conversation {
+    background: #2b303a none repeat scroll 0 0 padding-box;
+    border-radius: 3px 0 0 3px;
+    width: 100%;    
+
+    .conversation-header {
+        border-bottom: 1px solid #343a45;
+        color: #fff;
+        font-size: 14px;
+        padding:10px;
+    }
+
+    .conversation-body {
+        height: 100%;
+        list-style: outside none none;
+        margin: 0;
+        overflow: auto;
+        padding: 0;
+
+        li {
+            padding: 0px 24px;
+            padding-top: 15px;
+            p { color: #949494; }
+
+            .button-table { 
+                width:100%; display:table; 
+                button { display:table-cell; width:50%; }
+            }
+        }
+    }
+}
