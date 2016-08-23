@@ -10,8 +10,8 @@
                 <li v-for="message in messages" track-by="$index">
                     <p>{{{ message.desc }}}</p>
                     <div v-if="message.ifTrueDecisionId && message.ifFalseDecisionId">
-                        <button type="button" class="btn btn-primary btn-block">{{ buttonLabel(message.ifTrueDecisionId) }}</button>
-                        <button type="button" class="btn btn-success btn-block">{{ buttonLabel(message.ifFalseDecisionId) }}</button>
+                        <button type="button" class="btn btn-primary btn-block">{{ buttonLabel(message.ifTrueDecisionId).desc }}</button>
+                        <button type="button" class="btn btn-success btn-block">{{ buttonLabel(message.ifFalseDecisionId).desc }}</button>
                     </div>
                 </li>
                 <div style="height:20px"></div>
@@ -28,7 +28,7 @@ export default {
     data() {
         return {
             name: "Poddeh the Spritz",
-            newMessage: '',
+            myButtonLabel: '',
             messages: [],
         } 
     },
@@ -52,12 +52,17 @@ export default {
             this.newMessage = '';
         },
         buttonLabel(id) {
-            for(var i = 0; i < this.messages.length; i++) {
-                if(this.messages[i].ChoiceId == id) {
-                    return this.messages[i].desc;
+            var result = {};
+            $.ajax({
+                url: '/choice/' + id,  
+                type: 'GET',
+                async: false,
+                success: function(data) {
+                    result = data;
                 }
-                //return "Hachu" + id;//this.messages[id].desc;
-            }
+            });
+
+            return result;
         }
     },
     watch: {

@@ -13,11 +13,12 @@ class HomeController extends Controller {
     }
 
     public function getChoices() {
-        $choices = Choice::choices()->limit(4)->get();
+        $choices = Choice::choices()->limit(2)->get();
         return response()->json($choices);
     }
 
     public function getChoice($id) {
-        return $id;
+        $choice = Choice::choices()->where('ChoiceId', '=', $id)->first();
+        return response()->json($choice);
     }
 }

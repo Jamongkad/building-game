@@ -13,4 +13,4 @@
 
 Route::get('/', 'HomeController@index');
 Route::get('/choices', 'HomeController@getChoices');
-Route::get('/choices/{id}', 'HomeController@getChoice');
+Route::get('/choice/{id}', 'HomeController@getChoice');
