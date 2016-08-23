@@ -10,8 +10,12 @@
                 <li v-for="message in messages" track-by="$index">
                     <p>{{{ message.desc }}}</p>
                     <div v-if="message.ifTrueDecisionId && message.ifFalseDecisionId">
-                        <button type="button" class="btn btn-primary btn-block">{{ buttonLabel(message.ifTrueDecisionId).desc }}</button>
-                        <button type="button" class="btn btn-success btn-block">{{ buttonLabel(message.ifFalseDecisionId).desc }}</button>
+                        <button type="button" class="btn btn-primary btn-block" @click="decide(message.ifTrueDecisionId)">
+                            {{ buttonLabel(message.ifTrueDecisionId).desc }}
+                        </button>
+                        <button type="button" class="btn btn-success btn-block" @click="decide(message.ifFalseDecisionId)">
+                            {{ buttonLabel(message.ifFalseDecisionId).desc }}
+                        </button>
                     </div>
                 </li>
                 <div style="height:20px"></div>
@@ -50,6 +54,12 @@ export default {
             var msg = this.newMessage.trim();
             this.messages.push(msg);
             this.newMessage = '';
+        },
+        decide(id) {
+            console.log(id);
+            this.$http.get('/choice/' + id).then((result) => {
+                console.log(result.data);
+            }); 
         },
         buttonLabel(id) {
             var result = {};

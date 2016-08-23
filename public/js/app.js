@@ -21724,6 +21724,12 @@ exports.default = {
             this.messages.push(msg);
             this.newMessage = '';
         },
+        decide: function decide(id) {
+            console.log(id);
+            this.$http.get('/choice/' + id).then(function (result) {
+                console.log(result.data);
+            });
+        },
         buttonLabel: function buttonLabel(id) {
             var result = {};
             $.ajax({
@@ -21746,7 +21752,7 @@ exports.default = {
     }
 };
 if (module.exports.__esModule) module.exports = module.exports.default
-;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div>\n    <div class=\"chat-conversation\">\n        <!--\n        <div class=\"conversation-header\">\n            <p>Dark Patterns</p>\n        </div>\n        -->\n        <ul class=\"conversation-body\"> \n            <li v-for=\"message in messages\" track-by=\"$index\">\n                <p>{{{ message.desc }}}</p>\n                <div v-if=\"message.ifTrueDecisionId &amp;&amp; message.ifFalseDecisionId\">\n                    <button type=\"button\" class=\"btn btn-primary btn-block\">{{ buttonLabel(message.ifTrueDecisionId).desc }}</button>\n                    <button type=\"button\" class=\"btn btn-success btn-block\">{{ buttonLabel(message.ifFalseDecisionId).desc }}</button>\n                </div>\n            </li>\n            <div style=\"height:20px\"></div>\n        </ul>\n    </div>\n    <!--\n    <textarea v-model=\"newMessage\" v-on:keyup.enter=\"addMessage\"></textarea>\n    -->\n</div>\n"
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div>\n    <div class=\"chat-conversation\">\n        <!--\n        <div class=\"conversation-header\">\n            <p>Dark Patterns</p>\n        </div>\n        -->\n        <ul class=\"conversation-body\"> \n            <li v-for=\"message in messages\" track-by=\"$index\">\n                <p>{{{ message.desc }}}</p>\n                <div v-if=\"message.ifTrueDecisionId &amp;&amp; message.ifFalseDecisionId\">\n                    <button type=\"button\" class=\"btn btn-primary btn-block\" @click=\"decide(message.ifTrueDecisionId)\">\n                        {{ buttonLabel(message.ifTrueDecisionId).desc }}\n                    </button>\n                    <button type=\"button\" class=\"btn btn-success btn-block\" @click=\"decide(message.ifFalseDecisionId)\">\n                        {{ buttonLabel(message.ifFalseDecisionId).desc }}\n                    </button>\n                </div>\n            </li>\n            <div style=\"height:20px\"></div>\n        </ul>\n    </div>\n    <!--\n    <textarea v-model=\"newMessage\" v-on:keyup.enter=\"addMessage\"></textarea>\n    -->\n</div>\n"
 if (module.hot) {(function () {  module.hot.accept()
   var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)
