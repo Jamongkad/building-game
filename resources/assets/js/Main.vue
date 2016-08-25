@@ -11,10 +11,10 @@
                     <p>{{{ message.desc }}}</p>
                     <div v-if="message.ifTrueDecisionId && message.ifFalseDecisionId">
                         <button type="button" class="btn btn-primary btn-block" @click="decide(message.ifTrueDecisionId)">
-                            {{ buttonLabel(message.ifTrueDecisionId).desc }}
+
                         </button>
                         <button type="button" class="btn btn-success btn-block" @click="decide(message.ifFalseDecisionId)">
-                            {{ buttonLabel(message.ifFalseDecisionId).desc }}
+
                         </button>
                     </div>
                 </li>
@@ -37,7 +37,7 @@ export default {
         } 
     },
     ready() { 
-        this.$http.get('/choices').then((response) => {
+        this.$http.get('/narration').then((response) => {
             var result = response.data;
             for(var i = 0; i < result.length; i++) {
                 var storyData = result[i];
@@ -56,18 +56,21 @@ export default {
             this.newMessage = '';
         },
         decide(id) {
-            console.log(id);
+            /*
             this.$http.get('/choice/' + id).then((result) => {
                 console.log(result.data);
             }); 
+            */
         },
         buttonLabel(id) {
+
             var result = {};
+
             $.ajax({
                 url: '/choice/' + id,  
                 type: 'GET',
                 async: false,
-                success: function(data) {
+                success: (data) => {
                     result = data;
                 }
             });

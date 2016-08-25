@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateDecisionTable extends Migration
+class CreateSegmentTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,11 @@ class CreateDecisionTable extends Migration
     public function up()
     {
         //
-        Schema::create('Decision', function (Blueprint $table) {
+        Schema::create('Segment', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('chapterId');
             $table->integer('segmentId');
-            $table->integer('choiceADecisionSegment');
-            $table->integer('choiceBDecisionSegment');
+            $table->integer('narrationId');
         });
     }
 
@@ -30,6 +29,6 @@ class CreateDecisionTable extends Migration
     public function down()
     {
         //
-        Schema::drop('Decision');
+        Schema::drop('Segment');
     }
 }

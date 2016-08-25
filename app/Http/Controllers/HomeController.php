@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use App\Choice;
+use App\Narration;
 use App\Http\Requests;
 
 class HomeController extends Controller {
@@ -12,13 +12,10 @@ class HomeController extends Controller {
         return view('home.index');
     }
 
-    public function getChoices() {
-        $choices = Choice::choices()->limit(2)->get();
-        return response()->json($choices);
-    }
-
-    public function getChoice($id) {
-        $choice = Choice::choices()->where('ChoiceId', '=', $id)->first();
-        return response()->json($choice);
+    public function getNarration() {
+        $narration = Narration::leftJoin('Segment', 'Segment.narrationId', '=', 'Narration.id')->select([ 
+            'Narration.*', 'Segment.chapterId', 'Segment.segmentId', 'Segment.narrationId'
+        ])->where('Segment.segmentId', '=', 1)->get();
+        return response()->json($narration);
     }
 }
