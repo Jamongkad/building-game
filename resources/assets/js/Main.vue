@@ -1,87 +1,57 @@
 <template>
     <div>
         <div class="chat-conversation">
-            <!--
             <div class="conversation-header">
-                <p>Dark Patterns</p>
+                <h3>The Building</h3>
             </div>
-            -->
             <ul class="conversation-body"> 
                 <li v-for="message in messages" track-by="$index">
-                    <p>{{{ message.desc }}}</p>
-                    <div v-if="message.ifTrueDecisionId && message.ifFalseDecisionId">
-                        <button type="button" class="btn btn-primary btn-block" @click="decide(message.ifTrueDecisionId)">
-
-                        </button>
-                        <button type="button" class="btn btn-success btn-block" @click="decide(message.ifFalseDecisionId)">
-
-                        </button>
-                    </div>
+                    <p v-if="message.gameObject == 'text'">
+					    {{{ message.desc }}}	
+					</p>
+					<p v-if="message.gameObject == 'controls'">
+						<button type="button" class="btn btn-response btn-block"	
+						@click="decide(message)">
+							{{ message.desc }}
+						</button>
+					</p>
                 </li>
-                <div style="height:20px"></div>
+				<div class="text-center"><img v-show="loadingSVG" src="/img/ellipsis.svg" /></div>
+				<div style="height:20px"></div>
+				<div id="end"></div>
             </ul>
         </div>
-        <!--
-        <textarea v-model="newMessage" v-on:keyup.enter="addMessage"></textarea>
-        -->
     </div>
 </template>
 
 <script>
+import {moveStory} from './helpers.js';
 export default {
     data() {
         return {
-            name: "Poddeh the Spritz",
-            myButtonLabel: '',
+            showButtons: false,
+			loadingSVG: false,
+			segmentId: 0,
             messages: [],
+			buttons: [],
         } 
     },
     ready() { 
-        this.$http.get('/narration').then((response) => {
-            var result = response.data;
-            for(var i = 0; i < result.length; i++) {
-                var storyData = result[i];
-                this.messages.push(storyData);     
-            } 
-        }, (response) => { 
-            console.log("Failed");
-        });
+		moveStory(1, this);
     },
     computed: { 
     },
     methods: { 
-        addMessage() {
-            var msg = this.newMessage.trim();
-            this.messages.push(msg);
-            this.newMessage = '';
+        decide(button) {
+			console.log(button.desc);
+			console.log(button.choiceToSegment);
+		    moveStory(button.choiceToSegment, this);
         },
-        decide(id) {
-            /*
-            this.$http.get('/choice/' + id).then((result) => {
-                console.log(result.data);
-            }); 
-            */
-        },
-        buttonLabel(id) {
-
-            var result = {};
-
-            $.ajax({
-                url: '/choice/' + id,  
-                type: 'GET',
-                async: false,
-                success: (data) => {
-                    result = data;
-                }
-            });
-
-            return result;
-        }
     },
     watch: {
         'messages': function(val, oldval) {
-            var mydiv = $('.conversation-body');
-            mydiv.scrollTop(mydiv.prop("scrollHeight"));
+			$("body").animate({scrollTop: $("#end").offset().top }, 1000);
+			console.log(val);
         }
     }
 }

@@ -21695,67 +21695,40 @@ var __vueify_style__ = __vueify_insert__.insert("\n")
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
+
+var _helpers = require('./helpers.js');
+
 exports.default = {
     data: function data() {
         return {
-            name: "Poddeh the Spritz",
-            myButtonLabel: '',
-            messages: []
+            showButtons: false,
+            loadingSVG: false,
+            segmentId: 0,
+            messages: [],
+            buttons: []
         };
     },
     ready: function ready() {
-        var _this = this;
-
-        this.$http.get('/narration').then(function (response) {
-            var result = response.data;
-            for (var i = 0; i < result.length; i++) {
-                var storyData = result[i];
-                _this.messages.push(storyData);
-            }
-        }, function (response) {
-            console.log("Failed");
-        });
+        (0, _helpers.moveStory)(1, this);
     },
 
     computed: {},
     methods: {
-        addMessage: function addMessage() {
-            var msg = this.newMessage.trim();
-            this.messages.push(msg);
-            this.newMessage = '';
-        },
-        decide: function decide(id) {
-            /*
-            this.$http.get('/choice/' + id).then((result) => {
-                console.log(result.data);
-            }); 
-            */
-        },
-        buttonLabel: function buttonLabel(id) {
-
-            var result = {};
-
-            $.ajax({
-                url: '/choice/' + id,
-                type: 'GET',
-                async: false,
-                success: function success(data) {
-                    result = data;
-                }
-            });
-
-            return result;
+        decide: function decide(button) {
+            console.log(button.desc);
+            console.log(button.choiceToSegment);
+            (0, _helpers.moveStory)(button.choiceToSegment, this);
         }
     },
     watch: {
         'messages': function messages(val, oldval) {
-            var mydiv = $('.conversation-body');
-            mydiv.scrollTop(mydiv.prop("scrollHeight"));
+            $("body").animate({ scrollTop: $("#end").offset().top }, 1000);
+            console.log(val);
         }
     }
 };
 if (module.exports.__esModule) module.exports = module.exports.default
-;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div>\n    <div class=\"chat-conversation\">\n        <!--\n        <div class=\"conversation-header\">\n            <p>Dark Patterns</p>\n        </div>\n        -->\n        <ul class=\"conversation-body\"> \n            <li v-for=\"message in messages\" track-by=\"$index\">\n                <p>{{{ message.desc }}}</p>\n                <div v-if=\"message.ifTrueDecisionId &amp;&amp; message.ifFalseDecisionId\">\n                    <button type=\"button\" class=\"btn btn-primary btn-block\" @click=\"decide(message.ifTrueDecisionId)\">\n\n                    </button>\n                    <button type=\"button\" class=\"btn btn-success btn-block\" @click=\"decide(message.ifFalseDecisionId)\">\n\n                    </button>\n                </div>\n            </li>\n            <div style=\"height:20px\"></div>\n        </ul>\n    </div>\n    <!--\n    <textarea v-model=\"newMessage\" v-on:keyup.enter=\"addMessage\"></textarea>\n    -->\n</div>\n"
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n    <div>\n        <div class=\"chat-conversation\">\n            <div class=\"conversation-header\">\n                <h3>The Building</h3>\n            </div>\n            <ul class=\"conversation-body\"> \n                <li v-for=\"message in messages\" track-by=\"$index\">\n                    <p v-if=\"message.gameObject == 'text'\">\n\t\t\t\t\t    {{{ message.desc }}}\t\n\t\t\t\t\t</p>\n\t\t\t\t\t<p v-if=\"message.gameObject == 'controls'\">\n\t\t\t\t\t\t<button type=\"button\" class=\"btn btn-response btn-block\" @click=\"decide(message)\">\n\t\t\t\t\t\t\t{{ message.desc }}\n\t\t\t\t\t\t</button>\n\t\t\t\t\t</p>\n                </li>\n\t\t\t\t<div class=\"text-center\"><img v-show=\"loadingSVG\" src=\"/img/ellipsis.svg\"></div>\n\t\t\t\t<div style=\"height:20px\"></div>\n\t\t\t\t<div id=\"end\"></div>\n            </ul>\n        </div>\n    </div>\n"
 if (module.hot) {(function () {  module.hot.accept()
   var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)
@@ -21770,7 +21743,7 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update("_v-cffbf68a", module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
   }
 })()}
-},{"vue":5,"vue-hot-reload-api":3,"vueify/lib/insert-css":6}],8:[function(require,module,exports){
+},{"./helpers.js":9,"vue":5,"vue-hot-reload-api":3,"vueify/lib/insert-css":6}],8:[function(require,module,exports){
 'use strict';
 
 var _vue = require('vue');
@@ -21796,6 +21769,56 @@ new _vue2.default({
     components: { Main: _Main2.default }
 });
 
-},{"./Main.vue":7,"jquery":1,"vue":5,"vue-resource":4}]},{},[8]);
+},{"./Main.vue":7,"jquery":1,"vue":5,"vue-resource":4}],9:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.moveStory = moveStory;
+function moveStory(segmentId, obj) {
+    obj.$http.get('/narration/' + segmentId).then(function (response) {
+        var result = response.data;
+        var cursorLength = result.length;
+
+        obj.loadingSVG = true;
+
+        var myTimer = function myTimer(i, myObj) {
+            setTimeout(function () {
+                var storyData = result[i];
+                myObj.segmentId = storyData.segmentId;
+                myObj.messages.push(storyData);
+
+                if (i >= cursorLength - 1) {
+                    releaseButtons(obj);
+                }
+            }, getRandomInt(1700, 2000) * i);
+        };
+
+        for (var i = 0; i < result.length; i++) {
+            myTimer(i, obj);
+        }
+
+        clearTimeout(myTimer);
+    });
+
+    function getRandomInt(min, max) {
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    function releaseButtons(myObj) {
+        myObj.loadingSVG = false;
+        myObj.$http.get('/responses/' + myObj.segmentId).then(function (response) {
+            var result = response.data;
+            for (var i = 0; i < result.length; i++) {
+                console.log(result[i]);
+                //obj.buttons.push(result[i]);
+                myObj.messages.push(result[i]);
+            }
+        });
+    }
+}
+
+},{}]},{},[8]);
 
 //# sourceMappingURL=app.js.map

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Narration;
+use App\Response;
 use App\Http\Requests;
 
 class HomeController extends Controller {
@@ -12,10 +13,30 @@ class HomeController extends Controller {
         return view('home.index');
     }
 
-    public function getNarration() {
-        $narration = Narration::leftJoin('Segment', 'Segment.narrationId', '=', 'Narration.id')->select([ 
+    public function getNarration($segment = 1) {
+        $narrations = Narration::leftJoin('Segment', 'Segment.narrationId', '=', 'Narration.id')->select([ 
             'Narration.*', 'Segment.chapterId', 'Segment.segmentId', 'Segment.narrationId'
-        ])->where('Segment.segmentId', '=', 1)->get();
-        return response()->json($narration);
+        ])->where('Segment.segmentId', '=', $segment)->get();
+
+        $result = [];
+        foreach($narrations as $narration) {
+            $narration->gameObject = "text";
+            $result[] = $narration;
+        }
+
+        return response()->json($result);
+    }
+
+    public function getResponses($segment) {
+        $responses = Response::join('SegmentResponse', 'SegmentResponse.responseId', '=', 'Response.id')
+                              ->where('SegmentResponse.segmentId', '=', $segment)->get();
+
+
+        $result = [];
+        foreach($responses as $response) {
+            $response->gameObject = "controls";
+            $result[] = $response;
+        }
+        return response()->json($result);
     }
 }

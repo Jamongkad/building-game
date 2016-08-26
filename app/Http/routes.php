@@ -12,4 +12,5 @@
 */
 
 Route::get('/', 'HomeController@index');
-Route::get('/narration', 'HomeController@getNarration');
+Route::get('/narration/{segment?}', 'HomeController@getNarration');
+Route::get('/responses/{segment}', 'HomeController@getResponses');

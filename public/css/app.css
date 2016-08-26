@@ -5738,18 +5738,54 @@ button.close {
     border-bottom: 1px solid #343a45;
     color: #fff;
     font-size: 14px;
-    padding: 10px; }
+    padding: 1px 24px; }
   .chat-conversation .conversation-body {
-    height: 100%;
     list-style: outside none none;
     margin: 0;
     overflow: auto;
     padding: 0; }
     .chat-conversation .conversation-body li {
-      padding: 0px 24px;
-      padding-top: 15px; }
+      padding: 0px 24px; }
       .chat-conversation .conversation-body li p {
         color: #949494; }
+      .chat-conversation .conversation-body li button {
+        margin-top: 3px; }
+      .chat-conversation .conversation-body li .btn-response {
+        color: #fafafa;
+        background-color: #2B303A;
+        border-color: #286090; }
+      .chat-conversation .conversation-body li .btn-response:hover,
+      .chat-conversation .conversation-body li .btn-response:focus,
+      .chat-conversation .conversation-body li .btn-response:active,
+      .chat-conversation .conversation-body li .btn-response.active,
+      .chat-conversation .conversation-body li .open .dropdown-toggle.btn-response {
+        color: #fafafa;
+        background-color: #2B303A;
+        border-color: #286090; }
+      .chat-conversation .conversation-body li .btn-response:active,
+      .chat-conversation .conversation-body li .btn-response.active,
+      .chat-conversation .conversation-body li .open .dropdown-toggle.btn-response {
+        background-image: none; }
+      .chat-conversation .conversation-body li .btn-response.disabled,
+      .chat-conversation .conversation-body li .btn-response[disabled],
+      .chat-conversation .conversation-body li fieldset[disabled] .btn-response,
+      .chat-conversation .conversation-body li .btn-response.disabled:hover,
+      .chat-conversation .conversation-body li .btn-response[disabled]:hover,
+      .chat-conversation .conversation-body li fieldset[disabled] .btn-response:hover,
+      .chat-conversation .conversation-body li .btn-response.disabled:focus,
+      .chat-conversation .conversation-body li .btn-response[disabled]:focus,
+      .chat-conversation .conversation-body li fieldset[disabled] .btn-response:focus,
+      .chat-conversation .conversation-body li .btn-response.disabled:active,
+      .chat-conversation .conversation-body li .btn-response[disabled]:active,
+      .chat-conversation .conversation-body li fieldset[disabled] .btn-response:active,
+      .chat-conversation .conversation-body li .btn-response.disabled.active,
+      .chat-conversation .conversation-body li .btn-response[disabled].active,
+      .chat-conversation .conversation-body li fieldset[disabled] .btn-response.active {
+        background-color: #2B303A;
+        border-color: #286090; }
+      .chat-conversation .conversation-body li .btn-response .badge {
+        color: #2B303A;
+        background-color: #fafafa; }
       .chat-conversation .conversation-body li .button-table {
         width: 100%;
         display: table; }

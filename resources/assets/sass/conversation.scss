@@ -7,11 +7,10 @@
         border-bottom: 1px solid #343a45;
         color: #fff;
         font-size: 14px;
-        padding:10px;
+        padding: 1px 24px;
     }
 
     .conversation-body {
-        height: 100%;
         list-style: outside none none;
         margin: 0;
         overflow: auto;
@@ -19,8 +18,54 @@
 
         li {
             padding: 0px 24px;
-            padding-top: 15px;
             p { color: #949494; }
+            button { margin-top: 3px; }
+
+            .btn-response { 
+                color: #fafafa; 
+                background-color: #2B303A; 
+                border-color: #286090; 
+            } 
+
+            .btn-response:hover, 
+            .btn-response:focus, 
+            .btn-response:active, 
+            .btn-response.active, 
+            .open .dropdown-toggle.btn-response { 
+                color: #fafafa; 
+                background-color: #2B303A; 
+                border-color: #286090; 
+            } 
+
+            .btn-response:active, 
+            .btn-response.active, 
+            .open .dropdown-toggle.btn-response { 
+                background-image: none; 
+            } 
+
+            .btn-response.disabled, 
+            .btn-response[disabled], 
+            fieldset[disabled] .btn-response, 
+            .btn-response.disabled:hover, 
+            .btn-response[disabled]:hover, 
+            fieldset[disabled] .btn-response:hover, 
+            .btn-response.disabled:focus, 
+            .btn-response[disabled]:focus, 
+            fieldset[disabled] .btn-response:focus, 
+            .btn-response.disabled:active, 
+            .btn-response[disabled]:active, 
+            fieldset[disabled] .btn-response:active, 
+            .btn-response.disabled.active, 
+            .btn-response[disabled].active, 
+            fieldset[disabled] .btn-response.active { 
+                background-color: #2B303A; 
+                border-color: #286090; 
+            } 
+
+            .btn-response .badge { 
+                color: #2B303A; 
+                background-color: #fafafa; 
+            }
 
             .button-table { 
                 width:100%; display:table; 
