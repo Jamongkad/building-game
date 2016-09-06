@@ -16,6 +16,7 @@ class CreateNarrationTable extends Migration
         Schema::create('Narration', function (Blueprint $table) {
             $table->increments('id');
             $table->text('desc');
+            $table->integer('segmentId');
         });
     }
 

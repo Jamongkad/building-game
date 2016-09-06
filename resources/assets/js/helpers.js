@@ -14,7 +14,7 @@ export function moveStory(segmentId, obj) {
                 if(i >= (cursorLength - 1)) {	
                     releaseButtons(obj);
                 }
-            }, getRandomInt(1700, 2000) * i);
+            }, 3000 * i);
         }
 
         for(var i = 0; i < result.length; i++) {
@@ -33,8 +33,6 @@ export function moveStory(segmentId, obj) {
         myObj.$http.get('/responses/' + myObj.segmentId).then((response) => {
             var result = response.data;
             for(var i = 0; i < result.length; i++) {
-                console.log(result[i]);
-                //obj.buttons.push(result[i]);
                 myObj.messages.push(result[i]);
             }
         });

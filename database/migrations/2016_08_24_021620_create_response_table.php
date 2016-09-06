@@ -17,6 +17,7 @@ class CreateResponseTable extends Migration
             $table->increments('id');
             $table->text('desc');
             $table->integer('choiceToSegment');
+            $table->integer('belongsToSegment');
         });
     }
 

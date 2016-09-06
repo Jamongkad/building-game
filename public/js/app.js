@@ -21723,12 +21723,11 @@ exports.default = {
     watch: {
         'messages': function messages(val, oldval) {
             $("body").animate({ scrollTop: $("#end").offset().top }, 1000);
-            console.log(val);
         }
     }
 };
 if (module.exports.__esModule) module.exports = module.exports.default
-;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n    <div>\n        <div class=\"chat-conversation\">\n            <div class=\"conversation-header\">\n                <h3>The Building</h3>\n            </div>\n            <ul class=\"conversation-body\"> \n                <li v-for=\"message in messages\" track-by=\"$index\">\n                    <p v-if=\"message.gameObject == 'text'\">\n\t\t\t\t\t    {{{ message.desc }}}\t\n\t\t\t\t\t</p>\n\t\t\t\t\t<p v-if=\"message.gameObject == 'controls'\">\n\t\t\t\t\t\t<button type=\"button\" class=\"btn btn-response btn-block\" @click=\"decide(message)\">\n\t\t\t\t\t\t\t{{ message.desc }}\n\t\t\t\t\t\t</button>\n\t\t\t\t\t</p>\n                </li>\n\t\t\t\t<div class=\"text-center\"><img v-show=\"loadingSVG\" src=\"/img/ellipsis.svg\"></div>\n\t\t\t\t<div style=\"height:20px\"></div>\n\t\t\t\t<div id=\"end\"></div>\n            </ul>\n        </div>\n    </div>\n"
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n    <div>\n        <div class=\"chat-conversation\">\n            <div class=\"conversation-header\">\n                <h3>The Building</h3>\n            </div>\t\t\n\t\t\t<div style=\"height:20px\"></div>\n            <ul class=\"conversation-body\"> \n                <li v-for=\"message in messages\" track-by=\"$index\">\n                    <p v-if=\"message.gameObject == 'text'\">\n\t\t\t\t\t    {{{ message.desc }}}\t\n\t\t\t\t\t</p>\n\t\t\t\t\t<p v-if=\"message.gameObject == 'controls'\">\n\t\t\t\t\t\t<button type=\"button\" class=\"btn btn-response btn-block\" @click=\"decide(message)\" style=\"white-space:normal\">\n\t\t\t\t\t\t\t{{ message.desc }}\n\t\t\t\t\t\t</button>\n\t\t\t\t\t</p>\n                </li>\n\t\t\t\t<div class=\"text-center\"><img v-show=\"loadingSVG\" src=\"/img/ellipsis.svg\"></div>\n\t\t\t\t<div style=\"height:20px\"></div>\n\t\t\t\t<div id=\"end\"></div>\n            </ul>\n        </div>\n    </div>\n"
 if (module.hot) {(function () {  module.hot.accept()
   var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)
@@ -21792,7 +21791,7 @@ function moveStory(segmentId, obj) {
                 if (i >= cursorLength - 1) {
                     releaseButtons(obj);
                 }
-            }, getRandomInt(1700, 2000) * i);
+            }, 3000 * i);
         };
 
         for (var i = 0; i < result.length; i++) {
@@ -21811,8 +21810,6 @@ function moveStory(segmentId, obj) {
         myObj.$http.get('/responses/' + myObj.segmentId).then(function (response) {
             var result = response.data;
             for (var i = 0; i < result.length; i++) {
-                console.log(result[i]);
-                //obj.buttons.push(result[i]);
                 myObj.messages.push(result[i]);
             }
         });

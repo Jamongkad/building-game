@@ -12,11 +12,22 @@ class ResponseTableSeeder extends Seeder
     public function run()
     {
         //
-        DB::table('Response')->insert([
-            ['desc' => "What's going on?", 'choiceToSegment' => 2],
-            ['desc' => "What happen?", 'choiceToSegment' => 2],
-            ['desc' => "Are there any survivors?", 'choiceToSegment' => 3],
-            ['desc' => "Take me to them.", 'choiceToSegment' => 4],
-        ]);
+        $response = [
+            ['desc' => "What happened?", 'choiceToSegment' => 2, 'belongsToSegment' => 1],
+            ['desc' => "Calm her down. Everything is going to alright.", 'choiceToSegment' => 3.5, 'belongsToSegment' => 2],
+            ['desc' => "Take me to them.", 'choiceToSegment' => 3, 'belongsToSegment' => 3.5],
+            ['desc' => "Take me to them.", 'choiceToSegment' => 3, 'belongsToSegment' => 2],
+            ['desc' => "Can you all give me an account of what happened?", 'choiceToSegment' => 5, 'belongsToSegment' => 3],
+            ['desc' => "Lewis, is there something you want to say?", 'choiceToSegment' => 6, 'belongsToSegment' => 5],
+            ['desc' => "Meagan, are you alright?", 'choiceToSegment' => 7, 'belongsToSegment' => 6],
+            ['desc' => "Ben, are you hurt?", 'choiceToSegment' => 8, 'belongsToSegment' => 7],
+        ];
+
+        foreach($response as $r) {
+            $insertId = DB::table('Response')->insertGetId($r);
+            DB::table('SegmentResponse')->insert([
+                'chapterId' => 1, 'segmentId' => $r['belongsToSegment'], 'responseId' => $insertId
+            ]);
+        }
     }
 }

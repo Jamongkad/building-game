@@ -3,7 +3,8 @@
         <div class="chat-conversation">
             <div class="conversation-header">
                 <h3>The Building</h3>
-            </div>
+            </div>		
+			<div style="height:20px"></div>
             <ul class="conversation-body"> 
                 <li v-for="message in messages" track-by="$index">
                     <p v-if="message.gameObject == 'text'">
@@ -11,7 +12,7 @@
 					</p>
 					<p v-if="message.gameObject == 'controls'">
 						<button type="button" class="btn btn-response btn-block"	
-						@click="decide(message)">
+						@click="decide(message)" style="white-space:normal">
 							{{ message.desc }}
 						</button>
 					</p>
@@ -51,7 +52,6 @@ export default {
     watch: {
         'messages': function(val, oldval) {
 			$("body").animate({scrollTop: $("#end").offset().top }, 1000);
-			console.log(val);
         }
     }
 }
