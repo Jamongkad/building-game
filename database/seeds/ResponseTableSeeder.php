@@ -21,6 +21,7 @@ class ResponseTableSeeder extends Seeder
             ['desc' => "Lewis, is there something you want to say?", 'choiceToSegment' => 6, 'belongsToSegment' => 5],
             ['desc' => "Meagan, are you alright?", 'choiceToSegment' => 7, 'belongsToSegment' => 6],
             ['desc' => "Ben, are you hurt?", 'choiceToSegment' => 8, 'belongsToSegment' => 7],
+            ['desc' => "Go ahead Sue.", 'choiceToSegment' => 9, 'belongsToSegment' => 8],
         ];
 
         foreach($response as $r) {

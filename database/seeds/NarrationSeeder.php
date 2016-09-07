@@ -42,11 +42,17 @@ class NarrationSeeder extends Seeder
             ['desc' => "Meagan just had an argument with her father before heading out to the office.", 'segmentId' => 7],
             ['desc' => "She's worried about him. And feels guilty.", 'segmentId' => 7],
             ['desc' => "Someone cleared their throat, Ben looks uncomfortable.", 'segmentId' => 7],
-            ['desc' => "Ben says he's alright.", 'segmentId' => 8],
+            ['desc' => "He nods.", 'segmentId' => 8],
             ['desc' => "He was hired to do a photo shoot for this month's circular.", 'segmentId' => 8],
             ['desc' => "While taking a photo of the staff.", 'segmentId' => 8],
             ['desc' => "He glimpsed a shadow of a person behind one of the staff members.", 'segmentId' => 8],
             ['desc' => "The sight shocked him momentarily, then the lights went out.", 'segmentId' => 8],
+            ['desc' => "Sue has calmed down a bit.", 'segmentId' => 8],
+            ['desc' => "She was busy filing away paperwork.", 'segmentId' => 9],
+            ['desc' => "She was ready to head out and meet her friends for the night.", 'segmentId' => 9],
+            ['desc' => "Looked out the window to check state of traffic.", 'segmentId' => 9],
+            ['desc' => "A flash of light blinded her.", 'segmentId' => 9],
+            ['desc' => "Found herself lying on the floor. Then all this began.", 'segmentId' => 9],
         ];
 
         foreach($narration as $narrate) {
